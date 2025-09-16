@@ -1,0 +1,18 @@
+Investigation Notes
+This file documents specific technical steps and observations from the digital forensic investigation.
+
+Wireshark Filters Used
+?FTP Commands: `ftp.request.command` to analyze FTP command and response exchanges.
+?File Uploads: `ftp.request.command == "STOR"` to identify files uploaded by the attacker.
+?HTTP Analysis: `http.response.code == 404` to flag potential covert communication.
+?TCP Stream: Used "Follow TCP Stream" to reconstruct FTP sessions for detailed analysis.
+
+Key Observations
+?The attacker used anonymous login (username: anonymous, password: anonymous) to access the FTP server.
+?Uploaded files included `Pwdump7.exe`, `libeay32.dll`, and `hashlist.txt`, indicating potential credential harvesting.
+?The FTP server ran on Windows XP, a deprecated system with known vulnerabilities.
+?HTTP 404 responses were flagged for further steganographic analysis.
+
+Additional Notes
+?No password hashes were extracted, so John the Ripper/Hashcat were not used.
+?Steghide was prepared for steganographic analysis but not applied in this phase.
